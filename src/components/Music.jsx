@@ -1,29 +1,101 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
 
 const bars = [1, 1.6, 0.8, 1.4, 1.1, 0.7, 1.3];
+const YOUTUBE_VIDEO_ID = 'UsD_-iorga8';
 
-export default function Music() {
+export default function Music({ autoPlay = true }) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
+  const [isReady, setIsReady] = useState(false);
+  const playerRef = useRef(null);
+  const iframeRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Load YouTube IFrame API
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+
+    function initPlayer() {
+      if (!containerRef.current) return;
+      playerRef.current = new window.YT.Player(containerRef.current, {
+        videoId: YOUTUBE_VIDEO_ID,
+        playerVars: {
+          autoplay: autoPlay ? 1 : 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          loop: 1,
+          playlist: YOUTUBE_VIDEO_ID,
+          modestbranding: 1,
+          rel: 0,
+          enablejsapi: 1,
+          origin: window.location.origin,
+        },
+        events: {
+          onReady: (event) => {
+            setIsReady(true);
+            event.target.setVolume(80);
+            if (autoPlay) {
+              event.target.playVideo();
+              setIsPlaying(true);
+            }
+          },
+          onStateChange: (event) => {
+            // YT.PlayerState.PLAYING = 1, PAUSED = 2
+            setIsPlaying(event.data === 1);
+          },
+          onError: () => {
+            console.log('YouTube player error');
+          }
+        }
+      });
+    }
+
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = initPlayer;
+    }
+
+    return () => {
+      if (playerRef.current && playerRef.current.destroy) {
+        playerRef.current.destroy();
+      }
+    };
+  }, [autoPlay]);
 
   const togglePlay = () => {
-    if (!audioRef.current) return;
+    if (!playerRef.current || !isReady) return;
     if (isPlaying) {
-      audioRef.current.pause();
+      playerRef.current.pauseVideo();
     } else {
-      audioRef.current.play().catch(() => {});
+      playerRef.current.playVideo();
     }
-    setIsPlaying(!isPlaying);
   };
 
   return (
     <>
-      <audio ref={audioRef} loop>
-        {/* Replace /song.mp3 with your actual song file */}
-        <source src="/song.mp3" type="audio/mpeg" />
-      </audio>
+      {/* Hidden YouTube Player */}
+      <div
+        style={{
+          position: 'fixed',
+          top: '-9999px',
+          left: '-9999px',
+          width: 1,
+          height: 1,
+          overflow: 'hidden',
+          opacity: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <div ref={containerRef} id="yt-player-container" />
+      </div>
 
       {/* Floating music pill — fixed bottom right */}
       <motion.div
@@ -45,7 +117,7 @@ export default function Music() {
         }}
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 1.5, type: 'spring' }}
+        transition={{ delay: 0.8, type: 'spring' }}
       >
         <button
           onClick={togglePlay}
@@ -60,6 +132,7 @@ export default function Music() {
             justifyContent: 'center',
             boxShadow: '0 2px 10px rgba(236,72,153,0.35)',
             flexShrink: 0,
+            opacity: isReady ? 1 : 0.6,
           }}
           aria-label={isPlaying ? 'Pause music' : 'Play music'}
         >
@@ -70,8 +143,14 @@ export default function Music() {
         </button>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.7rem', fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            Our Song 🎵
+          <span style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: '0.68rem',
+            fontWeight: 600,
+            color: '#db2777',
+            letterSpacing: '0.02em',
+          }}>
+            Naach Meri Jaan 🎵
           </span>
           {/* Animated waveform */}
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 14, marginTop: 2 }}>

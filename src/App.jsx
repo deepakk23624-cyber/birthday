@@ -29,7 +29,7 @@ function App() {
             <SurpriseGift />
             <Reasons />
             <FinalSurprise />
-            <Music />
+            <Music autoPlay={true} />
 
             {/* Bottom Right Footer Credit */}
             <footer style={{ textAlign: 'right', padding: '1rem 1rem 0.5rem', opacity: 0.8 }}>
