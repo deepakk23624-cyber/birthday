@@ -6,12 +6,12 @@ export const content = {
     photo: "/pic1.jpeg",
   },
   message: {
-    title: "For My Bestie 💌",
+    title: "For My Kiran 💌",
     photo: "/photos/photo2.jpg",
     text: `Some people come into our lives and slowly become a part of our everyday happiness.\n\nYou are one of those people for me.\n\nFrom random conversations to endless laughs, from silly moments to the times when we simply understand each other without saying anything...\n\nI’m genuinely grateful to have you as my best friend.\n\nHappy Birthday, bestie. Keep smiling, keep shining and always stay the beautiful person you are. ❤️`
   },
   memories: {
-    title: "Our Memories",
+    title: "",
     photos: [
       { src: "/photos/photo3.jpg", caption: "Pretty as always 🌷" },
       { src: "/photos/photo4.jpg", caption: "Main character energy ✨" },
