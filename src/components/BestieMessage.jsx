@@ -50,12 +50,14 @@ export default function BestieMessage() {
 
           <motion.div
             style={{
-              width: '100%', height: 200,
+              width: '100%',
+              aspectRatio: '16 / 9',
               borderRadius: '1rem',
               overflow: 'hidden',
               marginBottom: '1.5rem',
               boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
               border: '3px solid rgba(255,255,255,0.7)',
+              position: 'relative',
             }}
             initial={{ scale: 0.92, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
@@ -65,7 +67,16 @@ export default function BestieMessage() {
             <img
               src={photo}
               alt="Bestie"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '56.5%',
+                height: '178%',
+                objectFit: 'cover',
+                transform: 'translate(-50%, -50%) rotate(270deg)',
+                display: 'block',
+              }}
             />
           </motion.div>
 

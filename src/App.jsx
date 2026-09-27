@@ -32,19 +32,7 @@ function App() {
             <Music autoPlay={true} />
 
             {/* Bottom Right Footer Credit */}
-            <footer style={{ textAlign: 'right', padding: '1rem 1rem 0.5rem', opacity: 0.8 }}>
-              <p style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: '0.5rem',
-                color: '#6b7280',
-                letterSpacing: '0.03em',
-                lineHeight: 1.35,
-                margin: 0,
-              }}>
-                Designed & Developed<br />
-                <span style={{ color: '#6b7280' }}>by </span><span style={{ color: '#db2777', fontWeight: 600 }}>Deepak</span> ✨
-              </p>
-            </footer>
+
           </div>
         )}
       </AnimatePresence>

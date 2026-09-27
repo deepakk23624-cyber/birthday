@@ -67,7 +67,7 @@ export default function BirthdayHero() {
           justifyContent: 'center',
         }}>
           <img
-            src="/pic1.jpeg"
+            src="/photos/logo1.png"
             alt="Birthday Girl"
             style={{
               width: '100%',

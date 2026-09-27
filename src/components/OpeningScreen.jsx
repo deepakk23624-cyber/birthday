@@ -108,27 +108,7 @@ export default function OpeningScreen({ onOpen }) {
         </motion.button>
       </motion.div>
 
-      {/* Bottom Right Credit */}
-      <div style={{
-        position: 'absolute',
-        bottom: '0.75rem',
-        right: '0.85rem',
-        zIndex: 20,
-        opacity: 0.8,
-        textAlign: 'right',
-      }}>
-        <p style={{
-          fontFamily: "'Poppins', sans-serif",
-          fontSize: '0.5rem',
-          color: '#6b7280',
-          letterSpacing: '0.03em',
-          lineHeight: 1.35,
-          margin: 0,
-        }}>
-          Designed & Developed<br />
-          <span style={{ color: '#6b7280' }}>by </span><span style={{ color: '#ec4899', fontWeight: 600 }}>Deepak</span> ✨
-        </p>
-      </div>
+
     </motion.div>
   );
 }
